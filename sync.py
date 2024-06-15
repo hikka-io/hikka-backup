@@ -1,19 +1,30 @@
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from app.database import sessionmanager
-from app.sync import download_images
 from app.utils import get_settings
-from app.sync import backup_images
 import asyncio
 
+from app.sync import (
+    download_images,
+    backup_images,
+)
 
-async def test():
+
+def init_scheduler():
+    scheduler = AsyncIOScheduler()
     settings = get_settings()
     sessionmanager.init(settings.database.endpoint)
 
-    await backup_images()
-    await download_images()
+    scheduler.add_job(download_images, "interval", hours=1)
+    scheduler.add_job(backup_images, "interval", hours=1)
+    scheduler.start()
 
-    await sessionmanager.close()
+    try:
+        loop = asyncio.get_event_loop()
+        loop.run_forever()
+    except (KeyboardInterrupt, SystemExit):
+        loop.run_until_complete(sessionmanager.close())
+        loop.close()
 
 
 if __name__ == "__main__":
-    asyncio.run(test())
+    init_scheduler()
