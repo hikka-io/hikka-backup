@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "hikka-backup"
+version = "0.1.0"
+description = "Hikka backup tool"
+authors = ["volbil <hello@volbil.com>"]
+readme = "README.md"
+package-mode = false
+
+[tool.poetry.dependencies]
+python = "^3.11"
+dynaconf = "^3.2.5"
+SQLAlchemy = "^2.0.30"
+alembic = "^1.13.1"
+asyncpg = "^0.29.0"
+greenlet = "^3.0.3"
+aiohttp = "^3.9.5"
+aiofiles = "^23.2.1"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

@@ -1,0 +1,7 @@
+[default]
+    [default.database]
+    endpoint = "postgresql+asyncpg://dev:password@localhost:5432/hikka-backup"
+
+    [default.backend]
+    token = "TOkEN"
+    system_path = "/home/username/backup"
